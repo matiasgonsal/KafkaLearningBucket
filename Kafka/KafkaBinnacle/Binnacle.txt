@@ -1,0 +1,54 @@
+-install kafka downloading the .tar file from the apache web page and decompressed it at the root user directory.
+-set the PATH variable at the shell profile (bash or zsc):
+  export PATH="$PATH:/Users/matiasgonsalves/kafka_2.13-2.5.0/bin"
+
+run zookeper:
+zookeeper-server-start.sh config/zookeeper.properties
+run kafka:
+kafka-server-start.sh config/server.properties
+
+
+
+Kafka CLI commands:
+Create a Topic:
+kafka-topics.sh --bootstrap-server localhost:9092 --topic first_topic --create --partitions 3 --replication-factor 1
+
+List topics:
+kafka-topics.sh --bootstrap-server localhost:9092 --list
+
+Describe a particular topic:
+kafka-topics.sh --bootstrap-server localhost:9092 --topic first_topic --describe
+
+Delete topic:
+kafka-topics.sh --bootstrap-server localhost:9092 --topic first_topic --delete
+
+
+Producer CLI produce messages:
+kafka-console-producer.sh --bootstrap-server localhost:9092 --topic first_topic
+>message 1
+>message 2
+>message 3
+>message 4
+>thi is the end :)
+
+Producer with keys:
+kafka-console-producer --bootstrap-server localhost:9092 --topic first_topic --property parse.key=true --property key.separator=,
+> key,value
+> another key,another value
+
+Consumer CLI consume messages:
+kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic first_topic   (READS ONLY THE NEW MESSAGES FROM WHEN THE CONSOLE WAS LAUNCHED)
+kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic first_topic --from-beginning   (READS ALL THE MESSAGES)
+kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic first_topic --group my-first-application  (Consumer with a consumerGroup. If we have more than one consumer with the same consumerGroup then the messages will be split up between the consumer applications)
+
+kafka-consumer-groups.sh --bootstrap-server localhost:9092 --list (List all the current consumer groups)
+kafka-consumer-groups.sh --bootstrap-server localhost:9092 --group my-first-application --describe (Information about a specific group)
+
+Consumer with keys
+kafka-console-consumer --bootstrap-server localhost:9092 --topic first_topic --from-beginning --property print.key=true --property key.separator=,
+
+
+
+ElasticSearch:
+https://app.bonsai.io/clusters/learning-els-testing-4526254182/console
+Console Query /jokes/_doc/TteNMHMBR0c5OTUTcNpk
